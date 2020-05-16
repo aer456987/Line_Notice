@@ -10,7 +10,7 @@ def getdata(url):
     # print(datas)
     return datas
 
-# (1)取得商品資訊-名稱/圖片/價格
+# 取得商品資訊-名稱/圖片/價格
 def information(datas):
     lists = []
     for data in datas:
@@ -23,9 +23,9 @@ def information(datas):
 
 # 搜尋關鍵字
 def content(datas, keyword):
-    switch = ['Switch', 'SWITCH', 'switch', 'Nintendo Switch', '任天堂']
-    lite = ['Switch lite', 'switch lite', 'switchlite', 'Switchlite', 'lite', 'Lite', 'Nintendo Switch Lite']
-    token = '**token**'
+    switch = ['Switch', 'SWITCH', 'switch', 'Nintendo Switch', 'NintendoSwitch']
+    lite = ['Switch lite', 'switch lite', 'switchlite', 'Switchlite', 'lite', 'Lite', 'Nintendo Switch Lite', 'Nintendo SwitchLite', 'NintendoSwitchLite']
+    token = '## 權杖 ##' 
     
     for line in datas:
         title = line[0]
@@ -51,7 +51,7 @@ def lineNotifyMessage(token, *msg):
         'Content-Type' : 'application/x-www-form-urlencoded'
     }
     payload = {'message': msg}
-    r = req.post('**URL**', headers = headers, params = payload) #補網址
+    r = req.post('## notify網址 ##', headers = headers, params = payload)
     return r.status_code
 
 # ========================================= #
