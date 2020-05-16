@@ -7,7 +7,6 @@ def getdata(url):
     import json
     datas = json.loads(pc.text)
     datas = datas['prods']   # (字典型態)網頁資料裡的prods字典
-    # print(datas)
     return datas
 
 # 取得商品資訊-名稱/圖片/價格
@@ -18,10 +17,11 @@ def information(datas):
         img = 'https://b.ecimg.tw'+ data['picB']
         urlid = 'https://24h.pchome.com.tw/prod/' + data['Id']
         price = data['price']
+        price = int(price)
         lists.append([name, img, urlid, price])
     return lists
 
-# 搜尋關鍵字
+# 搜尋條件
 def content(datas, keyword):
     switch = ['Switch', 'SWITCH', 'switch', 'Nintendo Switch', 'NintendoSwitch']
     lite = ['Switch lite', 'switch lite', 'switchlite', 'Switchlite', 'lite', 'Lite', 'Nintendo Switch Lite', 'Nintendo SwitchLite', 'NintendoSwitchLite']
@@ -34,7 +34,7 @@ def content(datas, keyword):
         urlid = '網址：' + line[2] + '\n'
         price = '價格：' + str(line[3]) + '\n'
         content = name, img, urlid, price
-        
+
         if keyword == 'a':
             lineNotifyMessage(token, content)
         if keyword in switch:
@@ -60,11 +60,10 @@ def lineNotifyMessage(token, *msg):
 def main():
     count = int(1)
     keyword = input('輸入關鍵字：')
-    page = input('輸入搜尋次數：')
-    page = int(page) + 1
+    page = int(input('輸入搜尋頁數：')) + 1
     while count<page:
         url = 'https://ecshweb.pchome.com.tw/search/v3.3/all/category/DGBJ/results?q=SWitch&page=' + str(count) + '&sort=prc/dc'
-        # print('【第', count , '次搜尋】')
+        print('【第', count , '次搜尋】')
         count += 1
         datas = getdata(url)
         datas = information(datas)
