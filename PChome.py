@@ -21,13 +21,19 @@ def information(datas):
         lists.append([name, img, urlid, price])
     return lists
 
-# 轉換格式
+# 搜尋關鍵字
 def content(datas, keyword):
+    switch = ['Switch', 'SWITCH', 'switch', 'Nintendo Switch', '任天堂']
+    lite = ['Switch lite', 'switch lite', 'switchlite', 'Switchlite', 'lite', 'Lite', 'Nintendo Switch Lite']
     for line in datas:
         name = line[0]
         if keyword == 'a':
             print('名稱：', line[0], '\n圖片：', line[1], '\n網址：', line[2], '\n價格：', line[3], '\n')
-        elif  keyword in name:
+        if keyword in switch:
+            keyword = 'Switch'
+        elif keyword in lite:
+            keyword = 'Switch Lite'
+        if keyword in name:
             print('名稱：', line[0], '\n圖片：', line[1], '\n網址：', line[2], '\n價格：', line[3], '\n')
 
 # ========================================= #
