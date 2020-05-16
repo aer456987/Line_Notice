@@ -46,7 +46,7 @@ def main():
     page = int(page) + 1
     while count<page:
         url = 'https://ecshweb.pchome.com.tw/search/v3.3/all/category/DGBJ/results?q=SWitch&page=' + str(count) + '&sort=prc/dc'
-        print('【第', count , '筆資料】')
+        print('【第', count , '次搜尋】')
         count += 1
         datas = getdata(url)
         datas = information(datas)
