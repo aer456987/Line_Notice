@@ -16,8 +16,8 @@ def information(datas):
     for data in datas:
         name = data['name']
         img = 'https://b.ecimg.tw'+ data['picB']
-        price = data['price']
         urlid = 'https://24h.pchome.com.tw/prod/' + data['Id']
+        price = data['price']
         lists.append([name, img, urlid, price])
     return lists
 
@@ -25,16 +25,34 @@ def information(datas):
 def content(datas, keyword):
     switch = ['Switch', 'SWITCH', 'switch', 'Nintendo Switch', '任天堂']
     lite = ['Switch lite', 'switch lite', 'switchlite', 'Switchlite', 'lite', 'Lite', 'Nintendo Switch Lite']
+    token = '**token**'
+    
     for line in datas:
-        name = line[0]
+        title = line[0]
+        name = '名稱：' + line[0] + '\n'
+        img = '圖片：' + line[1] + '\n'
+        urlid = '網址：' + line[2] + '\n'
+        price = '價格：' + str(line[3]) + '\n'
+        content = name, img, urlid, price
+        
         if keyword == 'a':
-            print('名稱：', line[0], '\n圖片：', line[1], '\n網址：', line[2], '\n價格：', line[3], '\n')
+            lineNotifyMessage(token, content)
         if keyword in switch:
             keyword = 'Switch'
         elif keyword in lite:
             keyword = 'Switch Lite'
-        if keyword in name:
-            print('名稱：', line[0], '\n圖片：', line[1], '\n網址：', line[2], '\n價格：', line[3], '\n')
+        if keyword in title:
+            lineNotifyMessage(token, content)
+
+# Line通知
+def lineNotifyMessage(token, *msg):
+    headers = {
+        'Authorization' : 'Bearer ' + token,
+        'Content-Type' : 'application/x-www-form-urlencoded'
+    }
+    payload = {'message': msg}
+    r = req.post('**URL**', headers = headers, params = payload) #補網址
+    return r.status_code
 
 # ========================================= #
 
@@ -46,13 +64,17 @@ def main():
     page = int(page) + 1
     while count<page:
         url = 'https://ecshweb.pchome.com.tw/search/v3.3/all/category/DGBJ/results?q=SWitch&page=' + str(count) + '&sort=prc/dc'
-        print('【第', count , '次搜尋】')
+        # print('【第', count , '次搜尋】')
         count += 1
         datas = getdata(url)
         datas = information(datas)
         print(content(datas, keyword))
-        print('=====================================================')
-
+        # print('=====================================================')
 
 # 呼叫使用
 main()
+
+
+
+
+
