@@ -17,7 +17,7 @@ def information(datas):
         img = 'https://b.ecimg.tw'+ data['picB']
         urlid = 'https://24h.pchome.com.tw/prod/' + data['Id']
         price = data['price']
-        price = int(price)
+        price = price
         lists.append([name, img, urlid, price])
     return lists
 
